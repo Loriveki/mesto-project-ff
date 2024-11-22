@@ -2,6 +2,7 @@
   height: 282px;
   object-fit: cover;
   width: 100%;
+  display: block;
 }
 
 .card__image:hover {
