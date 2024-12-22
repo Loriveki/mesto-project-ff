@@ -19,9 +19,25 @@
   cursor: pointer;
 }
 
+.popup__button_disabled {
+  background: #FFF;
+  color: rgba(0,0,0,.2);
+  border: 1px solid rgba(0,0,0,.2);
+  cursor: default;
+}
+
+.popup__button_disabled:hover {
+  background: #FFF;
+  cursor: default;
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;
     line-height: 17px;
   }
+}
+
+.popup__confirm-button{
+  margin-top: 30px;
 }
