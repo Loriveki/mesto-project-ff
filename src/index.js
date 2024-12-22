@@ -97,18 +97,22 @@ function renderCards(cards, currentUserId) {
 
 // Универсальная функция для открытия попапа
 function openAnyPopup(popupElement) {
-  const form = popupElement.querySelector('.popup__form');
-  
+  const form = popupElement.querySelector(".popup__form");
+
   if (form) {
-    clearValidation(form, validationSettings); 
-    enableValidation(validationSettings); 
+    clearValidation(form, validationSettings);
+    enableValidation(validationSettings);
   }
 
-  openPopup(popupElement); 
+  openPopup(popupElement);
 }
 
 // Функция для обработки загрузки кнопки
-function toggleButtonLoadingState(button, isLoading, defaultText = "Сохранить") {
+function toggleButtonLoadingState(
+  button,
+  isLoading,
+  defaultText = "Сохранить"
+) {
   if (isLoading) {
     button.textContent = "Сохранение...";
     button.disabled = true;
@@ -211,7 +215,8 @@ function openImagePopup(imageSrc, imageAlt) {
 // Обработчик удаления карточки
 function handleDelete(cardElement, cardId) {
   openAnyPopup(elements.deletePopup);
-  elements.deleteConfirmButton.onclick = () => confirmDelete(cardElement, cardId);
+  elements.deleteConfirmButton.onclick = () =>
+    confirmDelete(cardElement, cardId);
 }
 
 function reloadCards() {
@@ -268,7 +273,7 @@ function resetFormValidation(form, settings) {
 // Функция для открытия попапа редактирования аватара
 function openAvatarEditPopup() {
   elements.avatarInput.value = "";
-  openPopup(elements.avatarPopup); 
+  openPopup(elements.avatarPopup);
 }
 
 // Добавление обработчиков событий

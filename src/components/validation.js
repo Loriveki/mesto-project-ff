@@ -36,16 +36,14 @@ function checkInputValidity(form, input, settings) {
 
 // Функция получения пользовательского сообщения об ошибке
 function getCustomErrorMessage(input) {
-  const namePattern = /^[A-Za-z\u0400-\u04FFёЁ\s-]+$/; // Разрешает буквы, пробелы и дефисы
+  const namePattern = /^[A-Za-z\u0400-\u04FFёЁ\s-]+$/;
   const urlPattern =
-    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/; // Проверка URL
+    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
 
-  // Проверки на пустые поля
   if (input.validity.valueMissing) {
     return "Вы пропустили это поле";
   }
 
-  // Проверка для текстовых полей (Имя или Название карточки)
   if (["name", "card-name"].includes(input.name)) {
     if (input.validity.tooShort) {
       return `Минимальное количество символов: ${
@@ -66,14 +64,12 @@ function getCustomErrorMessage(input) {
     }
   }
 
-  // Проверка для полей URL
   if (["link", "url", "avatar", "image-url"].includes(input.name)) {
     if (!urlPattern.test(input.value)) {
       return "Введите адрес сайта.";
     }
   }
 
-  // Возвращаем стандартное сообщение, если других ошибок нет
   return input.validationMessage;
 }
 
@@ -97,7 +93,6 @@ function setEventListeners(form, settings) {
   });
 }
 
-// Основная функция включения валидации
 export function enableValidation(settings) {
   const forms = Array.from(document.querySelectorAll(settings.formSelector));
   forms.forEach((form) => {
@@ -106,7 +101,7 @@ export function enableValidation(settings) {
   });
 }
 
-// Функция очистки ошибок валидации
+// Функция очистки ошибок
 export function clearValidation(form, settings) {
   const inputs = Array.from(form.querySelectorAll(settings.inputSelector));
   const button = form.querySelector(settings.submitButtonSelector);
