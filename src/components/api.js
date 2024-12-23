@@ -25,12 +25,6 @@ function handleResponse(res) {
   });
 }
 
-// функция для обработки ошибок
-function handleError(error) {
-  console.error(`Произошла ошибка: ${error.message}`);
-  showErrorToUser(error.message);
-}
-
 // функция для отправки запросов
 function request(endpoint, options = {}) {
   const finalOptions = {
@@ -38,20 +32,7 @@ function request(endpoint, options = {}) {
     ...options,
   };
 
-  return fetch(`${config.baseUrl}${endpoint}`, finalOptions)
-    .then(handleResponse)
-    .catch(handleError);
-}
-
-// Функция для отображения ошибки пользователю
-function showErrorToUser(message) {
-  const errorMessage = document.createElement("div");
-  errorMessage.classList.add("error-message");
-  errorMessage.textContent = `Произошла ошибка: ${message}`;
-  document.body.appendChild(errorMessage);
-  setTimeout(() => {
-    errorMessage.remove();
-  }, 5000);
+  return fetch(`${config.baseUrl}${endpoint}`, finalOptions).then(handleResponse);
 }
 
 // API функции для работы с пользователем и карточками

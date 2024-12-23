@@ -1,3 +1,13 @@
+export const validationSettings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
+
+
 // Универсальная функция для поиска элемента ошибки
 function getErrorElement(form, input) {
   return form.querySelector(`#${input.name}-error`);
@@ -24,55 +34,6 @@ export function hideInputError(form, input, settings) {
   errorElement.classList.remove(settings.errorClass);
 }
 
-// Функция проверки валидности инпута
-function checkInputValidity(form, input, settings) {
-  const errorMessage = getCustomErrorMessage(input);
-  if (!input.validity.valid) {
-    showInputError(form, input, errorMessage, settings);
-  } else {
-    hideInputError(form, input, settings);
-  }
-}
-
-// Функция получения пользовательского сообщения об ошибке
-function getCustomErrorMessage(input) {
-  const namePattern = /^[A-Za-z\u0400-\u04FFёЁ\s-]+$/;
-  const urlPattern =
-    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
-
-  if (input.validity.valueMissing) {
-    return "Вы пропустили это поле";
-  }
-
-  if (["name", "card-name"].includes(input.name)) {
-    if (input.validity.tooShort) {
-      return `Минимальное количество символов: ${
-        input.minLength
-      }. Длина текста сейчас: ${input.value.length} символ${
-        input.value.length === 1 ? "" : "а"
-      }`;
-    }
-    if (input.validity.tooLong) {
-      return `Максимальное количество символов: ${
-        input.maxLength
-      }. Длина текста сейчас: ${input.value.length} символ${
-        input.value.length === 1 ? "" : "а"
-      }`;
-    }
-    if (!namePattern.test(input.value)) {
-      return "Можно использовать только буквы, пробелы и дефисы";
-    }
-  }
-
-  if (["link", "url", "avatar", "image-url"].includes(input.name)) {
-    if (!urlPattern.test(input.value)) {
-      return "Введите адрес сайта.";
-    }
-  }
-
-  return input.validationMessage;
-}
-
 // Функция изменения состояния кнопки сабмита
 export function toggleButtonState(inputs, button, settings) {
   const isFormValid = inputs.every((input) => input.validity.valid);
@@ -87,7 +48,11 @@ function setEventListeners(form, settings) {
 
   inputs.forEach((input) => {
     input.addEventListener("input", () => {
-      checkInputValidity(form, input, settings);
+      if (!input.validity.valid) {
+        showInputError(form, input, input.validationMessage, settings);
+      } else {
+        hideInputError(form, input, settings);
+      }
       toggleButtonState(inputs, button, settings);
     });
   });

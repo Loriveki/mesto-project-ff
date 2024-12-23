@@ -1,13 +1,15 @@
-export function createCard(
-  card,
+export function createCard({
+  card = {},
   currentUserId,
   openImagePopup,
   handleDelete,
-  handleLike
-) {
+  handleLike,
+}) {
+ 
   const cardTemplate = document
     .querySelector("#card-template")
     .content.cloneNode(true);
+
   const cardElement = cardTemplate.querySelector(".card");
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -15,10 +17,10 @@ export function createCard(
   const likeCount = cardElement.querySelector(".card__like-count");
   const deleteButton = cardElement.querySelector(".card__delete-button");
 
-  cardImage.src = card.link || "#";
-  cardImage.alt = card.name || "Изображение";
-  cardTitle.textContent = card.name || "Без названия";
-  likeCount.textContent = Array.isArray(card.likes) ? card.likes.length : 0;
+  cardImage.src = card.link;
+  cardImage.alt = card.name;
+  cardTitle.textContent = card.name;
+  likeCount.textContent = card.likes.length;
 
   const isLikedByUser = card.likes?.some((like) => like._id === currentUserId);
   if (isLikedByUser) {
@@ -30,7 +32,7 @@ export function createCard(
     card.owner._id !== currentUserId
   );
 
-  if (card.owner && card.owner._id === currentUserId) {
+  if (card.owner._id === currentUserId) {
     deleteButton.addEventListener("click", (event) => {
       const cardElement = event.target.closest(".card");
       handleDelete(cardElement, card._id);
