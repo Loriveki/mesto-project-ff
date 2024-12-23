@@ -32,7 +32,9 @@ function request(endpoint, options = {}) {
     ...options,
   };
 
-  return fetch(`${config.baseUrl}${endpoint}`, finalOptions).then(handleResponse);
+  return fetch(`${config.baseUrl}${endpoint}`, finalOptions).then(
+    handleResponse
+  );
 }
 
 // API функции для работы с пользователем и карточками

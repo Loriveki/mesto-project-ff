@@ -88,7 +88,12 @@ function renderCards(cards, currentUserId, method = "append") {
 
 // Универсальная функция для открытия попапа
 function openAnyPopup(popupElement, options = {}) {
-  const { clearForm = false, resetForm = false, setInputValues = {}, deactivateSubmitButton = false } = options;
+  const {
+    clearForm = false,
+    resetForm = false,
+    setInputValues = {},
+    deactivateSubmitButton = false,
+  } = options;
 
   // Если требуется очистка формы, делаем это
   if (clearForm) {
@@ -104,13 +109,15 @@ function openAnyPopup(popupElement, options = {}) {
 
   // Если нужно установить значения в поля ввода
   for (const [inputName, value] of Object.entries(setInputValues)) {
-    const inputElement = popupElement.querySelector(`.popup__input[name="${inputName}"]`);
+    const inputElement = popupElement.querySelector(
+      `.popup__input[name="${inputName}"]`
+    );
     if (inputElement) inputElement.value = value;
   }
 
   // Если нужно деактивировать кнопку сабмита
   if (deactivateSubmitButton) {
-    const submitButton = popupElement.querySelector('.popup__submit');
+    const submitButton = popupElement.querySelector(".popup__submit");
     if (submitButton) submitButton.disabled = true;
   }
 
@@ -227,7 +234,10 @@ function openAddCardPopup() {
 
 // Функция для открытия попапа редактирования аватара
 function openAvatarEditPopup() {
-  openAnyPopup(elements.avatarPopup, { resetForm: true, deactivateSubmitButton: true });
+  openAnyPopup(elements.avatarPopup, {
+    resetForm: true,
+    deactivateSubmitButton: true,
+  });
 }
 
 // Добавление обработчиков событий

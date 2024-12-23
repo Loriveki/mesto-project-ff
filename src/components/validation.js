@@ -7,7 +7,6 @@ export const validationSettings = {
   errorClass: "popup__error_visible",
 };
 
-
 // Универсальная функция для поиска элемента ошибки
 function getErrorElement(form, input) {
   return form.querySelector(`#${input.name}-error`);

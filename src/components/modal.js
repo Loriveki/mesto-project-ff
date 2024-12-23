@@ -1,5 +1,5 @@
-const ANIMATION_DELAY = 10; 
-const ANIMATION_DURATION = 600; 
+const ANIMATION_DELAY = 10;
+const ANIMATION_DURATION = 600;
 
 export function closePopup(popup, event = null) {
   if (event) {

@@ -5,7 +5,6 @@ export function createCard({
   handleDelete,
   handleLike,
 }) {
- 
   const cardTemplate = document
     .querySelector("#card-template")
     .content.cloneNode(true);
