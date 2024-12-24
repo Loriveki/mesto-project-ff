@@ -1,25 +1,12 @@
 const ANIMATION_DELAY = 10;
 const ANIMATION_DURATION = 600;
 
-export function closePopup(popup, event = null) {
-  if (event) {
-    // Если передано событие, проверяем, был ли клик по фону
-    if (event.target === event.currentTarget) {
-      popup.classList.remove("popup_is-opened");
-      setTimeout(() => {
-        popup.classList.remove("popup_is-animated");
-      }, ANIMATION_DURATION);
-    }
-  } else {
-    // Если событие не передано, закрываем попап напрямую
-    popup.classList.remove("popup_is-opened");
-    setTimeout(() => {
-      popup.classList.remove("popup_is-animated");
-    }, ANIMATION_DURATION);
-  }
+export function closePopup(popup) {
+  popup.classList.remove("popup_is-opened");
 
-  // Удаляем обработчик нажатия Escape
-  document.removeEventListener("keydown", handleEscClose);
+  setTimeout(() => {
+    popup.classList.remove("popup_is-animated");
+  }, ANIMATION_DURATION);
 }
 
 // Функция для обработки нажатия Escape

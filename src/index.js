@@ -87,41 +87,42 @@ function renderCards(cards, currentUserId, method = "append") {
 }
 
 // Универсальная функция для открытия попапа
-function openAnyPopup(popupElement, options = {}) {
-  const {
-    clearForm = false,
-    resetForm = false,
-    setInputValues = {},
-    deactivateSubmitButton = false,
-  } = options;
+function openAnyPopup(
+  popupElement,
+  { clearForm = false, setInputValues = {} } = {}
+) {
+  const form = popupElement.querySelector(".popup__form");
 
-  // Если требуется очистка формы, делаем это
-  if (clearForm) {
-    const form = popupElement.querySelector(".popup__form");
-    if (form) clearValidation(form, validationSettings);
+  if (form && clearForm) {
+    form.reset();
+    clearValidation(form, validationSettings);
+
+    toggleSubmitButton(
+      form,
+      Array.from(form.querySelectorAll(validationSettings.inputSelector)).every(
+        (input) => input.validity.valid
+      )
+    );
   }
 
-  // Если требуется сброс формы, делаем это
-  if (resetForm) {
-    const form = popupElement.querySelector(".popup__form");
-    if (form) form.reset();
-  }
-
-  // Если нужно установить значения в поля ввода
-  for (const [inputName, value] of Object.entries(setInputValues)) {
+  Object.entries(setInputValues).forEach(([inputName, value]) => {
     const inputElement = popupElement.querySelector(
       `.popup__input[name="${inputName}"]`
     );
     if (inputElement) inputElement.value = value;
-  }
-
-  // Если нужно деактивировать кнопку сабмита
-  if (deactivateSubmitButton) {
-    const submitButton = popupElement.querySelector(".popup__submit");
-    if (submitButton) submitButton.disabled = true;
-  }
+  });
 
   openPopup(popupElement);
+}
+
+// Универсальная функция для деактивации кнопки
+function toggleSubmitButton(form, isValid) {
+  const submitButton = form.querySelector(".popup__button");
+  submitButton.disabled = !isValid;
+  submitButton.classList.toggle(
+    validationSettings.inactiveButtonClass,
+    !isValid
+  );
 }
 
 // Обработчик отправки формы редактирования аватара
@@ -156,19 +157,17 @@ function handleFormEditProfile(evt) {
 // Функция для добавления карточки
 function handleAddCard(evt) {
   evt.preventDefault();
+
   const cardName = elements.placeNameInput.value;
   const cardLink = elements.placeLinkInput.value;
 
+  const submitButton = evt.submitter;
+  submitButton.disabled = true;
+  submitButton.classList.add(validationSettings.inactiveButtonClass);
+
   const makeRequest = () =>
     addCard(cardName, cardLink).then((newCard) => {
-      const cardElement = createCard({
-        card: newCard,
-        currentUserId,
-        openImagePopup,
-        handleDelete,
-        handleLike,
-      });
-      elements.placesList.prepend(cardElement);
+      renderCards([newCard], currentUserId, "prepend");
       closePopup(elements.addPopup);
     });
 
@@ -229,15 +228,12 @@ function openEditProfilePopup() {
 }
 
 function openAddCardPopup() {
-  openAnyPopup(elements.addPopup, { resetForm: true });
+  openAnyPopup(elements.addPopup, { clearForm: true });
 }
 
 // Функция для открытия попапа редактирования аватара
 function openAvatarEditPopup() {
-  openAnyPopup(elements.avatarPopup, {
-    resetForm: true,
-    deactivateSubmitButton: true,
-  });
+  openAnyPopup(elements.avatarPopup, { clearForm: true });
 }
 
 // Добавление обработчиков событий
@@ -248,10 +244,13 @@ function addEventListeners() {
   elements.formAddCard.addEventListener("submit", handleAddCard);
 
   elements.popups.forEach((popup) =>
-    popup.addEventListener("click", (event) => {
-      closePopup(popup, event);
+    popup.addEventListener("mousedown", (event) => {
+      if (event.target === popup) {
+        closePopup(popup);
+      }
     })
   );
+
   elements.closeButtons.forEach((button) =>
     button.addEventListener("click", () => closePopup(button.closest(".popup")))
   );
