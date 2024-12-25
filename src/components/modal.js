@@ -2,6 +2,8 @@ const ANIMATION_DELAY = 10;
 const ANIMATION_DURATION = 600;
 
 export function closePopup(popup) {
+  document.removeEventListener("keydown", handleEscClose);
+
   popup.classList.remove("popup_is-opened");
 
   setTimeout(() => {
