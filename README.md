@@ -33,12 +33,11 @@ Mesto — это интерактивная одностраничная веб-
 🔹 pages/ — стили:  
 &nbsp;&nbsp;&nbsp;&nbsp; 🔹 index.css — импортирует стили из vendor/ и blocks/.  
 🔹 vendor/ — сторонние ресурсы:  
-&nbsp;&nbsp;&nbsp;&nbsp;🔹 fonts/ — шрифты.  
+&nbsp;&nbsp;&nbsp;&nbsp; 🔹 fonts/ — шрифты.  
 &nbsp;&nbsp;&nbsp;&nbsp; 🔹 fonts.css — подключение шрифтов.  
-&nbsp;&nbsp;&nbsp;&nbsp; 🔹 normalize.css — сброс стилей.
-🔹 index.html — основной HTML-файл.
+&nbsp;&nbsp;&nbsp;&nbsp; 🔹 normalize.css — сброс стилей.  
+🔹 index.html — основной HTML-файл.  
 🔹 index.js —  инициализация DOM-элементов, обработчики событий, вызов модулей.
-
 
 ## 📥 Установка и запуск
 
