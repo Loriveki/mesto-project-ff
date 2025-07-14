@@ -64,7 +64,8 @@ npm run build
 ```
 
 ## 📸 Скриншоты
-![Главная страница] (https://github.com/user-attachments/assets/b466ec8e-6682-4976-ab83-1efa7793560a)
+![Главная страница](https://github.com/user-attachments/assets/6c07bc4a-14e5-4ecf-97b4-acee5d7bf3de)
+
 
 ## 📬 Контакты
 
